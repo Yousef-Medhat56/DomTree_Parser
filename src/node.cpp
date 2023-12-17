@@ -3,6 +3,12 @@
 #include "../include/node.h"
 using namespace std;
 
+Node::~Node()
+{
+    delete firstChild;
+    delete nextSibling;
+}
+
 TagNode::TagNode() : tagName("")
 {
     type = "tag";

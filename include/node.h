@@ -10,7 +10,7 @@ struct Node
     Node *firstChild;
     Node *nextSibling;
     virtual void display() const = 0;
-    virtual ~Node() {}
+    virtual ~Node();
 };
 
 struct TagNode : Node
