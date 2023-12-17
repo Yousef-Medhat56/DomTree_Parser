@@ -1,24 +1,30 @@
 #include <iostream>
 #include <string>
-#include "./src/node.cpp"
+#include "./src/tree.cpp"
 using namespace std;
 
 int main()
 {
     // Creating objects
-    TagNode tagNode("h1");
-    AttributeNode attributeNode("id", "myElm");
+    TagNode* tagNode = new TagNode("h1");
+    AttributeNode* attributeNode = new AttributeNode("id", "myElm");
     TextNode textNode("Hello, World!");
 
     // Displaying information
     cout << "TagNode: ";
-    tagNode.display();
+    tagNode->display();
 
     cout << "AttributeNode : ";
-    attributeNode.display();
+    attributeNode->display();
 
     cout << "TextNode : ";
     textNode.display();
 
+    Tree tree;
+    tree.insertChild(tagNode);
+    tree.insertChild(attributeNode,tagNode);
+    
+    cout << "AttributeNode : ";
+    tagNode->firstChild->display();
     return 0;
 }

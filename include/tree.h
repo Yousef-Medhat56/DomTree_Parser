@@ -5,9 +5,11 @@
 
 class Tree{
     Node* root;
-
+    void insertChildRecursive(Node* newNode, Node* parent);
+    
     public:
     Tree();
+    void insertChild(Node* newNode, Node* parent);
     ~Tree();
 };
 
