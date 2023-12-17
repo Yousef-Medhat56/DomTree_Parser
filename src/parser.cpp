@@ -6,13 +6,26 @@ using namespace std;
 
 string Parser::findTagName(const string &html)
 {
-    size_t closeTagStart = html.find('>'); //The index of the next close tag
-    size_t nextSpaceStart = html.find(' '); //The index of the next whitespace
+    size_t closeTagStart = html.find('>');  // The index of the next close tag
+    size_t nextSpaceStart = html.find(' '); // The index of the next whitespace
     string tagName;
-    //check if the tag has attributes (the index of the close tag will be bigger than the index of the whitespace)
-    if (closeTagStart > nextSpaceStart) 
+    // check if the tag has attributes (the index of the close tag will be bigger than the index of the whitespace)
+    if (closeTagStart > nextSpaceStart)
         tagName = html.substr(1, nextSpaceStart - 1);
     else
         tagName = html.substr(1, closeTagStart - 1);
     return tagName;
+}
+
+bool Parser::isClosedTag(const string &html, const string &tagName)
+{
+    // search for the close tag
+    size_t closeTag = html.find("</" + tagName + '>');
+    if (closeTag != std::string::npos)
+    {
+        // The tag is not self closed
+        return false;
+    }
+    // The tag is self closed
+    return true;
 }
