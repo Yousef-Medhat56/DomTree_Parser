@@ -31,3 +31,20 @@ void Tree::insertChild(Node *newNode, Node *parent = nullptr)
         // Check if the parent node param is provided, then call the recursive insert method
         parent ? insertChildRecursive(newNode, parent) : insertChildRecursive(newNode, root);
 }
+void Tree::insertSiblingRecursive(Node *newNode, Node *sibling)
+{
+    // If the current node has a sibling, traverse to the next sibling
+    if (sibling->nextSibling)
+        insertSiblingRecursive(newNode, sibling->nextSibling);
+    else
+        // If the current node does not have a sibling, insert the new node as its sibling
+        sibling->nextSibling = newNode;
+}
+
+void Tree::inserSibling(Node *newNode, Node *sibling)
+{
+        // Check that the sibling node exists and doesn't equal the root, 
+        // because the root node cannot has siblings
+        if (sibling && sibling != root)
+            insertSiblingRecursive(newNode, sibling);
+}
