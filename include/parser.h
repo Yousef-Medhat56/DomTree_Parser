@@ -9,9 +9,10 @@ using namespace std;
 
 class Parser
 {
-    static string findTagName(const string& html);
-    static bool isClosedTag(const string &html,const string &tagName);
-    
+    static string findTagName(const string &html);
+    static bool isSelfClosedTag(const string &html, const string &tagName);
+    static void createTagNode(const string &tagName, stack<TagNode *> &nodeStack, Tree *&tree, const string &html);
+
 };
 
 #endif
