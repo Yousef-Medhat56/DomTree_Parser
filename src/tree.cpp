@@ -43,8 +43,47 @@ void Tree::insertSiblingRecursive(Node *newNode, Node *sibling)
 
 void Tree::inserSibling(Node *newNode, Node *sibling)
 {
-        // Check that the sibling node exists and doesn't equal the root, 
-        // because the root node cannot has siblings
-        if (sibling && sibling != root)
-            insertSiblingRecursive(newNode, sibling);
+    // Check that the sibling node exists and doesn't equal the root,
+    // because the root node cannot has siblings
+    if (sibling && sibling != root)
+        insertSiblingRecursive(newNode, sibling);
+}
+
+void Tree::displayRecursive(Node *current, int depth)
+{
+
+    for (int i = 0; i < depth - 1; ++i)
+    {
+        std::cout << "     "; // Adjust indentation based on node depth
+    }
+
+    if (depth != 0)
+        cout << "|";
+
+    if (depth != 0)
+        std::cout << "_____";
+
+    // print node information
+    current->display();
+
+    // Recursively display child nodes
+    Node *child = current->firstChild;
+    while (child)
+    {
+        displayRecursive(child, depth + 1);
+        child = child->nextSibling;
+    }
+}
+
+void Tree::display()
+{
+    if (root)
+    {
+        std::cout << "Tree Structure:" << std::endl;
+        displayRecursive(root, 0);
+    }
+    else
+    {
+        std::cout << "Tree is empty." << std::endl;
+    }
 }
