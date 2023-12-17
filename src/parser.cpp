@@ -49,3 +49,35 @@ void Parser::createTagNode(const string &tagName, stack<TagNode *> &nodeStack, T
     if (!isSelfClosedTag(html, tagName))
         nodeStack.push(tagNode); // push the new node to the stack
 }
+
+Tree *Parser::parseHTML(string plainHtml)
+{
+    Tree *tree = new Tree();    // create the DOM tree
+    stack<TagNode *> nodeStack; // TagNodes stack
+    size_t pos = 0;             // position of the current character
+
+    while (pos < plainHtml.size())
+    {
+
+        // Find the index of the first open tag character
+        size_t openTagStart = plainHtml.find('<', pos);
+
+        // check that the tag is not a closing tag or a comment
+        if (plainHtml[openTagStart + 1] != '/' && plainHtml[openTagStart + 1] != '!')
+        {
+            // create substring of the plain html
+            string subPlainHtml = plainHtml.substr(openTagStart);
+            string tagName = findTagName(subPlainHtml);            // get the tag name
+            createTagNode(tagName, nodeStack, tree, subPlainHtml); // create a new Tag node
+        }
+
+        //if the tag is a closing tag
+        else if (plainHtml[openTagStart + 1] == '/')
+            nodeStack.pop(); // pop the last tag node from the stack
+
+
+        size_t closeTagStart = plainHtml.find('>', openTagStart);
+        pos = closeTagStart + 1;
+    }
+    return tree;
+}

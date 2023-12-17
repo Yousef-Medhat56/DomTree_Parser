@@ -1,30 +1,27 @@
 #include <iostream>
 #include <string>
-#include "./src/tree.cpp"
+#include "./src/parser.cpp"
 using namespace std;
 
 int main()
 {
-    // Creating objects
-    TagNode* tagNode = new TagNode("h1");
-    AttributeNode* attributeNode = new AttributeNode("id", "myElm");
-    TextNode textNode("Hello, World!");
+    std::string html = R"(<html>
+<head>
+    <meta>
+    <title></title>
+</head>
+<body>
+    <h1 id="heading"><h2></h2></h1>
+    <p><p><a><img><h3></h3></a></p></p>
+    <a></a>
+    <img>
+</body>
+</html>)";
 
-    // Displaying information
-    cout << "TagNode: ";
-    tagNode->display();
+    // Parse the HTML into a Tree
+    Tree *parsedTree = Parser::parseHTML(html);
 
-    cout << "AttributeNode : ";
-    attributeNode->display();
-
-    cout << "TextNode : ";
-    textNode.display();
-
-    Tree tree;
-    tree.insertChild(tagNode);
-    tree.insertChild(attributeNode,tagNode);
-    
-    cout << "AttributeNode : ";
-    tagNode->firstChild->display();
+    // Display the parsed tree
+    parsedTree->display();
     return 0;
 }
