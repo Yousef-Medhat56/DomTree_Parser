@@ -15,6 +15,8 @@ class Parser
     static bool hasAttributes(const string &html);
     static void createAttrTags(const string html, stack<TagNode *> &nodeStack, Tree *&tree);
     static string getTextContent(const string &html, const string &tagName);
+    static void createTextNode(const string &textContent, stack<TagNode *> &nodeStack, Tree *&tree);
+
 public:
     static Tree *parseHTML(string plainHtml);
 };

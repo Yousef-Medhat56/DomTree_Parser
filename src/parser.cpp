@@ -102,7 +102,6 @@ void Parser::createTagNode(const string &tagName, stack<TagNode *> &nodeStack, T
     nodeStack.push(tagNode); // push the new node to the stack
 }
 
-
 string Parser::getTextContent(const string &html, const string &tagName)
 {
     string tagStart = ">";
@@ -124,6 +123,17 @@ string Parser::getTextContent(const string &html, const string &tagName)
         return tagContent;
     }
     return "";
+}
+
+void Parser::createTextNode(const string &textContent, stack<TagNode *> &nodeStack, Tree *&tree)
+{
+    TextNode *textNode = new TextNode(textContent);
+    if (nodeStack.top()->firstChild)
+        // insert the new node as a sibling
+        tree->inserSibling(textNode, nodeStack.top()->firstChild);
+    else
+        // insert a new child node
+        tree->insertChild(textNode, nodeStack.top());
 }
 
 Tree *Parser::parseHTML(string plainHtml)
@@ -151,8 +161,15 @@ Tree *Parser::parseHTML(string plainHtml)
             if (hasAttributes(subPlainHtml))
                 createAttrTags(subPlainHtml, nodeStack, tree); // create attributes nodes and insert them to the tree
 
-            // check if the tag is self closed
-            if (isSelfClosedTag(subPlainHtml, tagName))
+            // check if the tag is not self closed (may have text content)
+            if (!isSelfClosedTag(subPlainHtml, tagName))
+            {
+                // get the text content of the tag
+                string textContent = getTextContent(subPlainHtml, tagName);
+                if (textContent.length())
+                    createTextNode(textContent, nodeStack, tree);
+            }
+            else
                 nodeStack.pop(); // remove it from the stack, because it will not have any text or tags children
         }
 
