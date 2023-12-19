@@ -31,3 +31,7 @@ string StringUtils::trimSpaces(string s)
     s = s.erase(0, s.find_first_not_of(' ')); // prefixing spaces
     return s;
 }
+bool StringUtils::startsWith(const string s, const string start)
+{
+    return (s.rfind(start, 0) == 0);
+}

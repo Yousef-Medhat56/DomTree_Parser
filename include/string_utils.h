@@ -13,6 +13,8 @@ class StringUtils{
     static string trimNewline(string s);
     // trim whitespaces from start and end of string
     static string trimSpaces(string s);
+    //check if string starts with the given string
+    static  bool startsWith(const string s,const string start);
 };
 
 #endif
