@@ -44,7 +44,7 @@ bool Parser::hasAttributes(const string &html)
     return false;
 }
 
-void Parser::findAttributes(string htmlTag, stack<TagNode *> &nodeStack, Tree *&tree)
+void Parser::createAttrTags(string htmlTag, stack<TagNode *> &nodeStack, Tree *&tree)
 {
 
     // the start of the attributes within the HTML tag
@@ -102,6 +102,30 @@ void Parser::createTagNode(const string &tagName, stack<TagNode *> &nodeStack, T
     nodeStack.push(tagNode); // push the new node to the stack
 }
 
+
+string Parser::getTextContent(const string &html, const string &tagName)
+{
+    string tagStart = ">";
+    string tagEnd = "</" + tagName + ">";
+
+    size_t start = html.find(tagStart);
+    size_t end = html.find(tagEnd, start);
+
+    // get the content inside the tag
+    string tagContent = html.substr(start + 1, end - start - 1);
+
+    // trim new lines and spaces from the tag content
+    tagContent = StringUtils::trimNewline(tagContent);
+    tagContent = StringUtils::trimSpaces(tagContent);
+
+    // check that the tag content is text not another tag
+    if (!StringUtils::startsWith(tagContent, "<") && !StringUtils::startsWith(tagContent, "</") && tagContent.length())
+    {
+        return tagContent;
+    }
+    return "";
+}
+
 Tree *Parser::parseHTML(string plainHtml)
 {
     Tree *tree = new Tree();    // create the DOM tree
@@ -122,13 +146,14 @@ Tree *Parser::parseHTML(string plainHtml)
             string subPlainHtml = plainHtml.substr(openTagStart);
             string tagName = findTagName(subPlainHtml);            // get the tag name
             createTagNode(tagName, nodeStack, tree, subPlainHtml); // create a new Tag node
-            //check if the tag has attributes
+
+            // check if the tag has attributes
             if (hasAttributes(subPlainHtml))
-                findAttributes(subPlainHtml, nodeStack, tree); //create attributes nodes and insert them to the tree
-            
-            //check if the tag is self closed
+                createAttrTags(subPlainHtml, nodeStack, tree); // create attributes nodes and insert them to the tree
+
+            // check if the tag is self closed
             if (isSelfClosedTag(subPlainHtml, tagName))
-                nodeStack.pop(); //remove it from the stack, because it will not have any text or tags children
+                nodeStack.pop(); // remove it from the stack, because it will not have any text or tags children
         }
 
         // if the tag is a closing tag
