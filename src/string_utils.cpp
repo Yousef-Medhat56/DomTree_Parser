@@ -24,3 +24,10 @@ string StringUtils::trimNewline(string s)
     s.erase(remove(s.begin(), s.end(), '\n'), s.cend());
     return s;
 }
+
+string StringUtils::trimSpaces(string s)
+{
+    s = s.erase(s.find_last_not_of(' ') + 1); // suffixing spaces
+    s = s.erase(0, s.find_first_not_of(' ')); // prefixing spaces
+    return s;
+}

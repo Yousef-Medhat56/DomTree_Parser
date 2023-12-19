@@ -11,6 +11,8 @@ class StringUtils{
     static vector<string> split(string s,string delimiter);
     // trim new line characters from start and end of string
     static string trimNewline(string s);
+    // trim whitespaces from start and end of string
+    static string trimSpaces(string s);
 };
 
 #endif
