@@ -6,6 +6,7 @@
 using namespace std;
 
 class Interpreter{
+    static void load(string filepath);
     public:
     // read the command that the user entered
     static void readCommand();
