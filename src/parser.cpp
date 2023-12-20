@@ -71,6 +71,8 @@ void Parser::createAttrTags(string htmlTag, stack<TagNode *> &nodeStack, DomTree
             string attrName = tokens[i];      // attribute name
             string attrValue = tokens[i + 1]; // attribute value
 
+            // trim the quotations at the first and end of the attribute value
+            attrValue = StringUtils::trimFirstAndLastChar(attrValue);
             // create attribute node
             AttributeNode *attrNode = new AttributeNode(attrName, attrValue);
             insertNodeToTree(attrNode, nodeStack, tree);
