@@ -73,13 +73,7 @@ void Parser::createAttrTags(string htmlTag, stack<TagNode *> &nodeStack, DomTree
 
             // create attribute node
             AttributeNode *attrNode = new AttributeNode(attrName, attrValue);
-
-            if (nodeStack.top()->firstChild)
-                // insert the new node as a sibling
-                tree->inserSibling(attrNode, nodeStack.top()->firstChild);
-            else
-                // insert a new child node
-                tree->insertChild(attrNode, nodeStack.top());
+            insertNodeToTree(attrNode, nodeStack, tree);
         }
     }
 }
@@ -92,12 +86,7 @@ void Parser::createTagNode(const string &tagName, stack<TagNode *> &nodeStack, D
         tree->insertChild(tagNode);
     else
     {
-        // if the top node at the stack already has a child, insert the new node as a sibling
-        if (nodeStack.top()->firstChild)
-            tree->inserSibling(tagNode, nodeStack.top()->firstChild);
-        else
-            // insert a new child node
-            tree->insertChild(tagNode, nodeStack.top());
+        insertNodeToTree(tagNode, nodeStack, tree);
     }
     nodeStack.push(tagNode); // push the new node to the stack
 }
@@ -128,19 +117,28 @@ string Parser::getTextContent(const string &html, const string &tagName)
 void Parser::createTextNode(const string &textContent, stack<TagNode *> &nodeStack, DomTree *&tree)
 {
     TextNode *textNode = new TextNode(textContent);
+    insertNodeToTree(textNode, nodeStack, tree);
+}
+
+void Parser::insertNodeToTree(Node *newNode, stack<TagNode *> &nodeStack, DomTree *&tree)
+{
+    // set the parent node of the new node
+    newNode->parent = nodeStack.top();
+
+    // check if the parent node has a child already
     if (nodeStack.top()->firstChild)
-        // insert the new node as a sibling
-        tree->inserSibling(textNode, nodeStack.top()->firstChild);
+        // insert the new node as a sibling to the child node
+        tree->inserSibling(newNode, nodeStack.top()->firstChild);
     else
         // insert a new child node
-        tree->insertChild(textNode, nodeStack.top());
+        tree->insertChild(newNode, nodeStack.top());
 }
 
 DomTree *Parser::parseHTML(string plainHtml)
 {
-    DomTree *tree = new DomTree();    // create the DOM tree
-    stack<TagNode *> nodeStack; // TagNodes stack
-    size_t pos = 0;             // position of the current character
+    DomTree *tree = new DomTree(); // create the DOM tree
+    stack<TagNode *> nodeStack;    // TagNodes stack
+    size_t pos = 0;                // position of the current character
 
     while (pos < plainHtml.size())
     {
