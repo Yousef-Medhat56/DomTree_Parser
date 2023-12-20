@@ -30,3 +30,15 @@ Node *DomTree::getAttrNode(string attrKey, string attrValue)
 {
     return getAttrNodeRecursive(root, attrKey, attrValue);
 };
+
+Node *DomTree::getTagById(const string id)
+{
+    //Find the id Attribute node
+    Node *attrNode = getAttrNode("id", id);
+
+    //check that the attribute node exists
+    if (attrNode)
+        //return the attribute node parent (Tag Node)
+        return attrNode->parent;
+    return nullptr;
+}
