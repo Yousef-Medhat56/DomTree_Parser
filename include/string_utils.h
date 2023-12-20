@@ -15,6 +15,8 @@ class StringUtils{
     static string trimSpaces(string s);
     //check if string starts with the given string
     static  bool startsWith(const string s,const string start);
+    //trim the first and last characters in the string
+    static string trimFirstAndLastChar(string s);
 };
 
 #endif
