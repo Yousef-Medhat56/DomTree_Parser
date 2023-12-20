@@ -1,10 +1,33 @@
 #include <stack>
 #include <iostream>
-#include <vector>
+#include <fstream>
 #include "../include/parser.h"
 #include "./dom_tree.cpp"
 #include "./string_utils.cpp"
 using namespace std;
+
+string Parser::readHtmlFile(string filepath)
+{
+    string plainHtml = "";
+
+    ifstream htmlFile(filepath);
+    if (htmlFile.is_open())
+    {
+        string line;
+        while (getline(htmlFile, line))
+        {
+            plainHtml += line;
+        }
+        // Close the file
+        htmlFile.close();
+    }
+    else
+    {
+        // Throw exception
+        throw runtime_error("Error: Couldn't open file " + filepath);
+    }
+    return plainHtml;
+}
 
 string Parser::findTagName(const string &html)
 {

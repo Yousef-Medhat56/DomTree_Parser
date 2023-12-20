@@ -20,6 +20,7 @@ class Parser
 
 public:
     static DomTree *parseHTML(string plainHtml);
+    static string readHtmlFile(string filepath);
 };
 
 #endif
