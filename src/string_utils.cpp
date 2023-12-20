@@ -3,19 +3,37 @@
 #include "../include/string_utils.h"
 using namespace std;
 
+
+//split string(by a delimiter) to a vector of strings (but ignore the string between double quatations)
 vector<string> StringUtils::split(string s, string delimiter)
 {
-    size_t pos = 0; // index of the current character
-    string token;
     vector<string> tokens;
+    size_t start = 0;
+    bool insideQuotes = false;
 
-    while ((pos = s.find(delimiter)) != std::string::npos)
+    //loop through each character in the string
+    for (size_t i = 0; i < s.length(); ++i)
     {
-        token = s.substr(0, pos);
-        tokens.push_back(token);
-        s.erase(0, pos + delimiter.length()); // remove the token
+        // check if the character is a double quatation
+        if (s[i] == '"')
+        {
+            insideQuotes = !insideQuotes;
+        }
+
+        
+        if (!insideQuotes && s.substr(i, delimiter.length()) == delimiter)
+        {
+            string token = s.substr(start, i - start);
+            tokens.push_back(token);
+            start = i + delimiter.length();
+            i = start - 1; // Move i to the end of the current token
+        }
     }
-    tokens.push_back(s);
+
+    // Add the last token (or the entire string if no delimiter is found)
+    string lastToken = s.substr(start);
+    tokens.push_back(lastToken);
+
     return tokens;
 }
 

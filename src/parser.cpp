@@ -58,7 +58,7 @@ void Parser::createAttrTags(string htmlTag, stack<TagNode *> &nodeStack, Tree *&
     // vector of attributes plain text
     vector<string> attrPairs = StringUtils::split(attributesText, " ");
 
-    for (int i = 0; i < attrPairs.size(); i++)
+    for (int i = 1; i < attrPairs.size(); i++)
     {
         // split the key and value of the attribute
         vector<string> tokens = StringUtils::split(attrPairs[i], "=");
