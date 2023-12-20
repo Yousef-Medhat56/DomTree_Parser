@@ -10,6 +10,16 @@ Node::~Node()
     delete nextSibling;
 }
 
+string Node::getAttrName()
+{
+    return "";
+}
+
+string Node::getAttrVal()
+{
+    return "";
+}
+
 TagNode::TagNode() : tagName("")
 {
     type = "tag";
@@ -47,7 +57,17 @@ AttributeNode::AttributeNode(string name, string value) : attributeName(name), a
 };
 void AttributeNode::display() const
 {
-    cout << attributeName << ": " << attributeValue << endl;
+    cout << attributeName << ": " << '"' << attributeValue << '"' << endl;
+}
+
+string AttributeNode::getAttrName()
+{
+    return attributeName;
+}
+
+string AttributeNode::getAttrVal()
+{
+    return attributeValue;
 }
 
 TextNode::TextNode() : text("")

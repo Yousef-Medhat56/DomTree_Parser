@@ -11,6 +11,8 @@ struct Node
     Node *firstChild;
     Node *nextSibling;
     virtual void display() const = 0;
+    virtual string getAttrName();
+    virtual string getAttrVal();
     virtual ~Node();
 };
 
@@ -29,6 +31,8 @@ struct AttributeNode : Node
     AttributeNode();
     AttributeNode(string name, string value);
     void display() const override;
+    string getAttrName() override;
+    string getAttrVal() override;
 };
 
 struct TextNode : Node

@@ -5,9 +5,13 @@
 
 class DomTree : public Tree
 {
+    // find the Attribute node, using attribute name and value
+    Node *getAttrNode(string attrKey, string attrValue);
+    Node *getAttrNodeRecursive(Node *current, string attrKey, string attrValue);
+
 public:
     // get a tag node using its id attribute
-    TagNode *getTagById(const string id);
+    Node *getTagById(const string id);
 };
 
 #endif
