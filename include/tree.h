@@ -5,6 +5,7 @@
 
 class Tree
 {
+protected:
     Node *root;
     void insertChildRecursive(Node *newNode, Node *parent);
     void insertSiblingRecursive(Node *newNode, Node *sibling);

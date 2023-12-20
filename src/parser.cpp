@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "../include/parser.h"
-#include "./tree.cpp"
+#include "./dom_tree.cpp"
 #include "./string_utils.cpp"
 using namespace std;
 
@@ -44,7 +44,7 @@ bool Parser::hasAttributes(const string &html)
     return false;
 }
 
-void Parser::createAttrTags(string htmlTag, stack<TagNode *> &nodeStack, Tree *&tree)
+void Parser::createAttrTags(string htmlTag, stack<TagNode *> &nodeStack, DomTree *&tree)
 {
 
     // the start of the attributes within the HTML tag
@@ -84,7 +84,7 @@ void Parser::createAttrTags(string htmlTag, stack<TagNode *> &nodeStack, Tree *&
     }
 }
 
-void Parser::createTagNode(const string &tagName, stack<TagNode *> &nodeStack, Tree *&tree, const string &html)
+void Parser::createTagNode(const string &tagName, stack<TagNode *> &nodeStack, DomTree *&tree, const string &html)
 {
     TagNode *tagNode = new TagNode(tagName);
     // if the nodes stack is empty, insert the root node
@@ -125,7 +125,7 @@ string Parser::getTextContent(const string &html, const string &tagName)
     return "";
 }
 
-void Parser::createTextNode(const string &textContent, stack<TagNode *> &nodeStack, Tree *&tree)
+void Parser::createTextNode(const string &textContent, stack<TagNode *> &nodeStack, DomTree *&tree)
 {
     TextNode *textNode = new TextNode(textContent);
     if (nodeStack.top()->firstChild)
@@ -136,9 +136,9 @@ void Parser::createTextNode(const string &textContent, stack<TagNode *> &nodeSta
         tree->insertChild(textNode, nodeStack.top());
 }
 
-Tree *Parser::parseHTML(string plainHtml)
+DomTree *Parser::parseHTML(string plainHtml)
 {
-    Tree *tree = new Tree();    // create the DOM tree
+    DomTree *tree = new DomTree();    // create the DOM tree
     stack<TagNode *> nodeStack; // TagNodes stack
     size_t pos = 0;             // position of the current character
 

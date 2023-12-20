@@ -60,5 +60,5 @@ TextNode::TextNode(string val) : text(val)
 
 void TextNode::display() const
 {
-    cout << text << endl;
+    cout << '"' << text << '"' << endl;
 }
