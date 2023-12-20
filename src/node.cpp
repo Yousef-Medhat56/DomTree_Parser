@@ -5,6 +5,7 @@ using namespace std;
 
 Node::~Node()
 {
+    delete parent;
     delete firstChild;
     delete nextSibling;
 }
@@ -12,6 +13,7 @@ Node::~Node()
 TagNode::TagNode() : tagName("")
 {
     type = "tag";
+    parent = nullptr;
     firstChild = nullptr;
     nextSibling = nullptr;
 };
@@ -19,6 +21,7 @@ TagNode::TagNode() : tagName("")
 TagNode::TagNode(string tag) : tagName(tag)
 {
     type = "tag";
+    parent = nullptr;
     firstChild = nullptr;
     nextSibling = nullptr;
 };
@@ -31,12 +34,14 @@ void TagNode::display() const
 AttributeNode::AttributeNode() : attributeName(""), attributeValue("")
 {
     type = "attr";
+    parent = nullptr;
     firstChild = nullptr;
     nextSibling = nullptr;
 };
 AttributeNode::AttributeNode(string name, string value) : attributeName(name), attributeValue(value)
 {
     type = "attr";
+    parent = nullptr;
     firstChild = nullptr;
     nextSibling = nullptr;
 };
@@ -48,12 +53,14 @@ void AttributeNode::display() const
 TextNode::TextNode() : text("")
 {
     type = "text";
+    parent = nullptr;
     firstChild = nullptr;
     nextSibling = nullptr;
 };
 TextNode::TextNode(string val) : text(val)
 {
     type = "text";
+    parent = nullptr;
     firstChild = nullptr;
     nextSibling = nullptr;
 };

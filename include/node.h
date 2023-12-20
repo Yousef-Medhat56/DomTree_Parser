@@ -7,6 +7,7 @@ using namespace std;
 struct Node
 {
     string type;
+    Node *parent;
     Node *firstChild;
     Node *nextSibling;
     virtual void display() const = 0;
