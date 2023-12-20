@@ -13,8 +13,8 @@ vector<string> StringUtils::split(string s, string delimiter)
     // loop through each character in the string
     for (size_t i = 0; i < s.length(); ++i)
     {
-        // check if the character is a double quatation
-        if (s[i] == '"')
+        // check if the character is a quatation character
+        if (s[i] == '"'||s[i] == '\'')
         {
             insideQuotes = !insideQuotes;
         }
