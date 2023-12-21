@@ -14,7 +14,7 @@ vector<string> StringUtils::split(string s, string delimiter)
     for (size_t i = 0; i < s.length(); ++i)
     {
         // check if the character is a quatation character
-        if (s[i] == '"'||s[i] == '\'')
+        if (s[i] == '"' || s[i] == '\'')
         {
             insideQuotes = !insideQuotes;
         }
@@ -57,4 +57,17 @@ string StringUtils::trimFirstAndLastChar(string s)
     s.pop_back();
     s.erase(s.begin());
     return s;
+}
+
+string StringUtils::extract(string s, const string delimiter1, const string delimiter2)
+{
+    size_t start = s.find(delimiter1);
+    size_t end = s.find(delimiter2);
+
+    start += delimiter1.size();
+    end -= (delimiter2.size() + 1);
+
+    //the extracted string
+    string extracted = s.substr(start, end);
+    return extracted;
 }
