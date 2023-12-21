@@ -10,6 +10,7 @@ class Interpreter
 {
     static void load(string filepath, DomTree *&tree);
     static void print(DomTree *&tree);
+    static void search(string selector, DomTree *&tree);
 
 public:
     // read the command that the user entered

@@ -37,6 +37,14 @@ void Interpreter::readCommand(DomTree *&tree)
                 load(filepath, tree);
             }
         }
+        // check if the user entered the selector command
+        else if (StringUtils::startsWith(command, "$(") && command[command.size() - 1] == ')')
+        {
+            // extract the selector
+            string selector = StringUtils::extract(command, "$(\"", "\")");
+
+            search(selector, tree);
+        }
         else if (command == "exit")
         {
             break;
@@ -81,9 +89,35 @@ void Interpreter::load(string filepath, DomTree *&tree)
 
 void Interpreter::print(DomTree *&tree)
 {
-    //check that the tree pointer has a value
+    // check that the tree pointer has a value
     if (tree)
         tree->display();
+    else
+        std::cerr << "Error: load html file first" << std::endl;
+}
+
+void Interpreter::search(string selector, DomTree *&tree)
+{
+    if (tree)
+
+    {
+        // check if the selector is for Id attribute
+        if (selector[0] == '#')
+        {
+            // trim the first char (#)
+            selector = StringUtils::trimFirst(selector);
+
+            // search for the tag element by id
+            Node *tagNode = tree->getTagById(selector);
+
+            if (tagNode)
+                tagNode->display();
+            else
+                std::cerr << "Not Found" << std::endl;
+        }
+        else
+            std::cerr << "Error: syntax error" << std::endl;
+    }
     else
         std::cerr << "Error: load html file first" << std::endl;
 }
