@@ -3,7 +3,7 @@
 #include "../include/parser.h"
 using namespace std;
 
-void Interpreter::readCommand()
+void Interpreter::readCommand(DomTree *&tree)
 {
     // the command that the user will enter
     string command;
@@ -17,15 +17,15 @@ void Interpreter::readCommand()
         cin.sync();
         getline(cin, command);
 
-        //trim whitespaces at start and end of the command
+        // trim whitespaces at start and end of the command
         command = StringUtils::trimSpaces(command);
-        
-        //split the command
+
+        // split the command
         vector<string> command_splitted = StringUtils::split(command, " ");
-        
+
         if (command == "print")
         {
-            cout << "Print command" << endl;
+            print(tree);
         }
         else if (command_splitted[0] == "load")
         {
@@ -34,7 +34,7 @@ void Interpreter::readCommand()
             {
                 // file path
                 string filepath = command_splitted[command_splitted.size() - 1];
-                load(filepath);
+                load(filepath, tree);
             }
         }
         else if (command == "exit")
@@ -50,7 +50,7 @@ void Interpreter::readCommand()
     cout << "Exiting the program. Goodbye!" << std::endl;
 }
 
-void Interpreter::load(string filepath)
+void Interpreter::load(string filepath, DomTree *&tree)
 {
     // check if the filepath has quatations
     if (filepath[0] == '"' || filepath[0] == '\'')
@@ -64,6 +64,9 @@ void Interpreter::load(string filepath)
         {
             // read the file content
             string plainHtml = Parser::readHtmlFile(filepath);
+
+            tree = Parser::parseHTML(plainHtml);
+            cout << "Success: file uploaded successfully" << endl;
         }
         catch (const std::exception &e)
         {
@@ -74,4 +77,13 @@ void Interpreter::load(string filepath)
     {
         std::cerr << "Error: load html files only" << std::endl;
     }
+}
+
+void Interpreter::print(DomTree *&tree)
+{
+    //check that the tree pointer has a value
+    if (tree)
+        tree->display();
+    else
+        std::cerr << "Error: load html file first" << std::endl;
 }
