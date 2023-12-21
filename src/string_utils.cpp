@@ -52,6 +52,11 @@ bool StringUtils::startsWith(const string s, const string start)
     return (s.rfind(start, 0) == 0);
 }
 
+string StringUtils::trimFirst(string s){
+    s.erase(s.begin());
+    return s;
+}
+
 string StringUtils::trimFirstAndLastChar(string s)
 {
     s.pop_back();
