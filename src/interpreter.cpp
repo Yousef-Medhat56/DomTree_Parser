@@ -99,25 +99,30 @@ void Interpreter::print(DomTree *&tree)
 void Interpreter::search(string selector, DomTree *&tree)
 {
     if (tree)
-
     {
         // check if the selector is for Id attribute
         if (selector[0] == '#')
         {
-            // trim the first char (#)
-            selector = StringUtils::trimFirst(selector);
-
-            // search for the tag element by id
-            Node *tagNode = tree->getTagById(selector);
-
-            if (tagNode)
-                tagNode->display();
-            else
-                std::cerr << "Not Found" << std::endl;
+            // search for the tag by id
+            searchById(selector, tree);
         }
         else
             std::cerr << "Error: syntax error" << std::endl;
     }
     else
         std::cerr << "Error: load html file first" << std::endl;
+}
+
+void Interpreter::searchById(string selector, DomTree *&tree)
+{
+    // trim the first char (#)
+    selector = StringUtils::trimFirst(selector);
+
+    // search for the tag element by id
+    Node *tagNode = tree->getTagById(selector);
+
+    if (tagNode)
+        tagNode->display();
+    else
+        std::cerr << "Not Found" << std::endl;
 }
