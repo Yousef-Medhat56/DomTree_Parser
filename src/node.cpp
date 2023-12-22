@@ -20,6 +20,11 @@ string Node::getAttrVal()
     return "";
 }
 
+void Node::displayChildren()
+{
+    return;
+}
+
 TagNode::TagNode() : tagName("")
 {
     type = "tag";
@@ -39,6 +44,28 @@ TagNode::TagNode(string tag) : tagName(tag)
 void TagNode::display() const
 {
     cout << tagName << endl;
+}
+
+void TagNode::displayChildren()
+{
+    // print the parent node
+    this->display();
+    cout << "|_____";
+
+    // the first child
+    Node *child = this->firstChild;
+    
+    // print the first child node
+    child->display();
+    
+    //loop through the child siblings
+    while (child->nextSibling)
+    {
+        child = child->nextSibling;
+        cout << "|_____";
+        // print the sibling node
+        child->display();
+    }
 }
 
 AttributeNode::AttributeNode() : attributeName(""), attributeValue("")

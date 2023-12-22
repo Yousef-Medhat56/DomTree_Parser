@@ -122,7 +122,7 @@ void Interpreter::searchById(string selector, DomTree *&tree)
     Node *tagNode = tree->getTagById(selector);
 
     if (tagNode)
-        tagNode->display();
+        tagNode->displayChildren();
     else
         std::cerr << "Not Found" << std::endl;
 }

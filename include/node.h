@@ -13,6 +13,8 @@ struct Node
     virtual void display() const = 0;
     virtual string getAttrName();
     virtual string getAttrVal();
+    // display the direct children of the node
+    virtual void displayChildren();
     virtual ~Node();
 };
 
@@ -22,6 +24,7 @@ struct TagNode : Node
     TagNode();
     TagNode(string tag);
     void display() const override;
+    void displayChildren() override;
 };
 
 struct AttributeNode : Node
