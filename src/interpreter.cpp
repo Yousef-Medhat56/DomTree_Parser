@@ -57,7 +57,7 @@ void Interpreter::readCommand(DomTree *&tree)
         }
         else
         {
-            Console::error("Type 'help' to see the available commands.");
+            Console::error("- Type 'help' to see the available commands.");
         }
     }
 }
@@ -87,7 +87,7 @@ void Interpreter::load(string filepath, DomTree *&tree)
             string plainHtml = Parser::readHtmlFile(filepath);
 
             tree = Parser::parseHTML(plainHtml);
-            Console::success("Html file parsed to DOM tree successfully");
+            Console::success("- Html file parsed to DOM tree successfully");
         }
         catch (const std::exception &e)
         {
@@ -96,7 +96,7 @@ void Interpreter::load(string filepath, DomTree *&tree)
     }
     else
     {
-        Console::error("Load html files only");
+        Console::error("- Load html files only");
     }
 }
 
@@ -106,7 +106,7 @@ void Interpreter::print(DomTree *&tree)
     if (tree)
         tree->display();
     else
-        Console::error("Load html file first. Use: load <html-filepath>");
+        Console::error("- Load html file first. Use: load <html-filepath>");
 }
 
 void Interpreter::search(string selector, DomTree *&tree)
@@ -120,10 +120,10 @@ void Interpreter::search(string selector, DomTree *&tree)
             searchById(selector, tree);
         }
         else
-            Console::error("Syntax error: insert $(\"#<id-value>\")");
+            Console::error("- Syntax error: insert $(\"#<id-value>\")");
     }
     else
-        Console::error("Load html file first. Use: load <html-filepath>");
+        Console::error("- Load html file first. Use: load <html-filepath>");
 }
 
 void Interpreter::searchById(string selector, DomTree *&tree)
@@ -138,7 +138,7 @@ void Interpreter::searchById(string selector, DomTree *&tree)
         tagNode->displayChildren();
     else
     {
-        string err_message = "Can't find: " + selector;
+        string err_message = "- Can't find element with id: " + selector;
         Console::error(err_message);
     }
 }
