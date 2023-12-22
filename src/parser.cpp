@@ -1,4 +1,3 @@
-#include <stack>
 #include <iostream>
 #include <fstream>
 #include "../include/parser.h"

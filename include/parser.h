@@ -2,8 +2,7 @@
 #define PARSER_H
 
 #include <string>
-#include <stack>
-
+#include "../src/stack.cpp"
 #include "./dom_tree.h"
 using namespace std;
 
