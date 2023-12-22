@@ -12,6 +12,7 @@ class Interpreter
     static void print(DomTree *&tree);
     static void search(string selector, DomTree *&tree);
     static void searchById(string selector, DomTree *&tree);
+    static void help();
 
 public:
     // read the command that the user entered

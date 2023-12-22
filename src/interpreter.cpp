@@ -6,6 +6,7 @@ using namespace std;
 
 void Interpreter::readCommand(DomTree *&tree)
 {
+    cout << "- Type 'help' to see the available commands." << endl;
     // the command that the user will enter
     string command;
 
@@ -46,6 +47,10 @@ void Interpreter::readCommand(DomTree *&tree)
 
             search(selector, tree);
         }
+        else if (command == "help")
+        {
+            help();
+        }
         else if (command == "exit")
         {
             break;
@@ -55,6 +60,15 @@ void Interpreter::readCommand(DomTree *&tree)
             Console::error("Type 'help' to see the available commands.");
         }
     }
+}
+
+void Interpreter::help()
+{
+    string commands = R"(- load <html-filepath>: Load html file to parse it to the DOM tree.
+- print: Print the DOM tree.
+- $("#id-value"): Search for a Tag element using its id.
+- exit: Exit the program.)";
+    cout << commands << endl;
 }
 
 void Interpreter::load(string filepath, DomTree *&tree)
@@ -92,7 +106,7 @@ void Interpreter::print(DomTree *&tree)
     if (tree)
         tree->display();
     else
-        Console::error("Load html file first");
+        Console::error("Load html file first. Use: load <html-filepath>");
 }
 
 void Interpreter::search(string selector, DomTree *&tree)
@@ -109,7 +123,7 @@ void Interpreter::search(string selector, DomTree *&tree)
             Console::error("Syntax error: insert $(\"#<id-value>\")");
     }
     else
-        Console::error("Load html file first");
+        Console::error("Load html file first. Use: load <html-filepath>");
 }
 
 void Interpreter::searchById(string selector, DomTree *&tree)
