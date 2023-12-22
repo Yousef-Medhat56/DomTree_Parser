@@ -1,6 +1,7 @@
 #include "../include/interpreter.h"
 #include "../include/string_utils.h"
 #include "../include/parser.h"
+#include "./console.cpp"
 using namespace std;
 
 void Interpreter::readCommand(DomTree *&tree)
@@ -51,11 +52,9 @@ void Interpreter::readCommand(DomTree *&tree)
         }
         else
         {
-            cout << "Type 'help' to see the available commands." << endl;
+            Console::error("Type 'help' to see the available commands.");
         }
     }
-
-    cout << "Exiting the program. Goodbye!" << std::endl;
 }
 
 void Interpreter::load(string filepath, DomTree *&tree)
@@ -74,16 +73,16 @@ void Interpreter::load(string filepath, DomTree *&tree)
             string plainHtml = Parser::readHtmlFile(filepath);
 
             tree = Parser::parseHTML(plainHtml);
-            cout << "Success: file uploaded successfully" << endl;
+            Console::success("Html file parsed to DOM tree successfully");
         }
         catch (const std::exception &e)
         {
-            std::cerr << e.what() << endl;
+            Console::error(e.what());
         }
     }
     else
     {
-        std::cerr << "Error: load html files only" << std::endl;
+        Console::error("Load html files only");
     }
 }
 
@@ -93,7 +92,7 @@ void Interpreter::print(DomTree *&tree)
     if (tree)
         tree->display();
     else
-        std::cerr << "Error: load html file first" << std::endl;
+        Console::error("Load html file first");
 }
 
 void Interpreter::search(string selector, DomTree *&tree)
@@ -107,10 +106,10 @@ void Interpreter::search(string selector, DomTree *&tree)
             searchById(selector, tree);
         }
         else
-            std::cerr << "Error: syntax error" << std::endl;
+            Console::error("Syntax error: insert $(\"#<id-value>\")");
     }
     else
-        std::cerr << "Error: load html file first" << std::endl;
+        Console::error("Load html file first");
 }
 
 void Interpreter::searchById(string selector, DomTree *&tree)
@@ -124,5 +123,8 @@ void Interpreter::searchById(string selector, DomTree *&tree)
     if (tagNode)
         tagNode->displayChildren();
     else
-        std::cerr << "Not Found" << std::endl;
+    {
+        string err_message = "Can't find: " + selector;
+        Console::error(err_message);
+    }
 }
